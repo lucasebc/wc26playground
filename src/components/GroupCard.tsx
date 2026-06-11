@@ -5,7 +5,6 @@ import { StandingsTable } from './StandingsTable';
 import { calculateStandings } from '@/lib/simulation';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { FlagImage } from './FlagImage';
 
 interface Props {
   group: Group;
@@ -24,11 +23,9 @@ export function GroupCard({ group, onMatchChange }: Props) {
       {/* Header */}
       <div className="bg-green-700 dark:bg-green-800 px-4 py-2 flex items-center justify-between">
         <h3 className="text-white font-bold text-lg">Grupo {group.id}</h3>
-        <div className="flex items-center gap-1">
-          {group.teams.map(t => (
-            <FlagImage key={t.id} code={t.flagCode} name={t.name} />
-          ))}
-        </div>
+        <span className="text-white/70 text-sm font-normal">
+          {group.teams.map(t => t.name).join(' · ')}
+        </span>
       </div>
 
       {/* Standings */}

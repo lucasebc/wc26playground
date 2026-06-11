@@ -1,10 +1,21 @@
-import { TeamStanding } from '@/types';
-import { FlagImage } from './FlagImage';
+import { TeamStanding } from "@/types";
+import { FlagImage } from "./FlagImage";
 
 interface Props {
   standings: TeamStanding[];
   qualifiedCount?: number;
 }
+
+const HEADERS: { label: string; title: string; bold?: boolean }[] = [
+  { label: "J", title: "Jogos disputados" },
+  { label: "V", title: "Vitórias" },
+  { label: "E", title: "Empates" },
+  { label: "D", title: "Derrotas" },
+  { label: "GP", title: "Gols marcados (Pró)" },
+  { label: "GC", title: "Gols sofridos (Contra)" },
+  { label: "SG", title: "Saldo de gols" },
+  { label: "Pts", title: "Pontos", bold: true },
+];
 
 export function StandingsTable({ standings, qualifiedCount = 2 }: Props) {
   return (
@@ -14,14 +25,15 @@ export function StandingsTable({ standings, qualifiedCount = 2 }: Props) {
           <tr className="text-gray-500 dark:text-gray-400 text-xs uppercase">
             <th className="text-left py-1 pl-1 w-8">#</th>
             <th className="text-left py-1">Seleção</th>
-            <th className="text-center py-1 w-8">J</th>
-            <th className="text-center py-1 w-8">V</th>
-            <th className="text-center py-1 w-8">E</th>
-            <th className="text-center py-1 w-8">D</th>
-            <th className="text-center py-1 w-8">GP</th>
-            <th className="text-center py-1 w-8">GC</th>
-            <th className="text-center py-1 w-8">SG</th>
-            <th className="text-center py-1 w-8 font-bold">Pts</th>
+            {HEADERS.map((h) => (
+              <th
+                key={h.label}
+                title={h.title}
+                className={`text-center py-1 w-8 cursor-help select-none ${h.bold ? "font-bold" : ""}`}
+              >
+                {h.label}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -32,8 +44,7 @@ export function StandingsTable({ standings, qualifiedCount = 2 }: Props) {
               <tr
                 key={s.team.id}
                 className={`border-t border-gray-100 dark:border-gray-700 ${
-                  isQualified ? 'bg-green-50 dark:bg-green-900/20' :
-                  isThird ? 'bg-yellow-50 dark:bg-yellow-900/10' : ''
+                  isQualified ? "bg-green-50 dark:bg-green-900/20" : isThird ? "bg-yellow-50 dark:bg-yellow-900/10" : ""
                 }`}
               >
                 <td className="py-1.5 pl-1 text-gray-500 dark:text-gray-400">{i + 1}</td>
