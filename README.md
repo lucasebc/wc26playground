@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Copa do Mundo 2026 — Simulador
 
-## Getting Started
+Simule os grupos e o mata-mata da Copa do Mundo FIFA 2026 com 48 seleções.
 
-First, run the development server:
+## Funcionalidades
+
+- 🏆 12 grupos com 4 seleções cada (48 times no total)
+- 📊 Tabela de classificação em tempo real
+- 🗺️ Bracket interativo do mata-mata
+- 🌙 Modo claro/escuro
+- 🔗 Compartilhar simulação via link (requer MongoDB)
+
+## Tecnologias
+
+- **Next.js 14** (App Router + TypeScript)
+- **Tailwind CSS** + `next-themes` (dark/light mode)
+- **MongoDB** via Mongoose (para salvar simulações)
+- **lucide-react** para ícones
+
+## Configuração
+
+### 1. Instalar dependências
+
+```bash
+npm install
+```
+
+### 2. Variáveis de ambiente (opcional — para compartilhar simulações)
+
+Copie `.env.example` para `.env.local` e preencha sua URI do MongoDB:
+
+```bash
+cp .env.example .env.local
+```
+
+```env
+MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/worldcup2026
+```
+
+> Sem o MongoDB, a funcionalidade de compartilhar ficará desativada — o restante do simulador funciona normalmente.
+
+### 3. Rodar localmente
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Build de produção
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Estrutura
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  lib/
+    teams.ts        # 48 seleções
+    groups.ts       # sorteio dos grupos
+    mongodb.ts      # conexão MongoDB
+    simulation.ts   # lógica de standings e avanço
+  types/index.ts    # interfaces TypeScript
+  models/
+    Simulation.ts   # modelo Mongoose
+  components/       # componentes React
+  app/
+    page.tsx        # página inicial
+    simulation/     # simulador principal
+    share/[code]/   # visualização de simulações compartilhadas
+    api/simulations # API de salvar/carregar simulações
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
